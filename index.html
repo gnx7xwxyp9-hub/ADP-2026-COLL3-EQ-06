@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ADP EPS - COLL3_EQ_06</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; direction: ltr; }
+        .app-card { max-width: 550px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin: auto; }
+        h1 { color: #2c3e50; text-align: center; font-size: 1.5rem; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #34495e; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+        button { width: 100%; padding: 12px; background: #3498db; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        button:hover { background: #2980b9; }
+        #result { margin-top: 20px; display: none; padding: 15px; border-radius: 8px; }
+        .profil-A { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .profil-B { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .profil-C { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+
+<div class="app-card">
+    <h1>Analyse de Performance : Cooper 6'</h1>
+    <div class="input-group">
+        <label>Élève (Nom & Prénom)</label>
+        <input type="text" id="studentName">
+    </div>
+    <div class="input-group">
+        <label>Âge (12 - 20 ans)</label>
+        <input type="number" id="age">
+    </div>
+    <div class="input-group">
+        <label>Sexe</label>
+        <select id="gender">
+            <option value="M">Masculin</option>
+            <option value="F">Féminin</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <label>Distance Parcourue (mètres)</label>
+        <input type="number" id="distance">
+    </div>
+    <button onclick="calculate()">GÉNÉRER LE PROFIL & SA</button>
+
+    <div id="result">
+        <h3 id="resProfil"></h3>
+        <p id="resVMA"></p>
+        <hr>
+        <strong>Orientations Pédagogiques (SA) :</strong>
+        <p id="resSA"></p>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        const name = document.getElementById('studentName').value;
+        const dist = document.getElementById('distance').value;
+        const gender = document.getElementById('gender').value;
+        const vma = (dist / 100).toFixed(2);
+        const resDiv = document.getElementById('result');
+
+        let profil = "";
+        let sa = "";
+
+        // Logique de décision (Moteur IA)
+        let limit1 = (gender === "M") ? 1100 : 950;
+        let limit2 = (gender === "M") ? 1450 : 1250;
+
+        if (dist < limit1) {
+            profil = "PROFIL A : Niveau Émergent";
+            resDiv.className = "profil-A";
+            sa = "SA : Travail de régularité d'allure (plots tous les 50m) à 70% VMA.";
+        } else if (dist <= limit2) {
+            profil = "PROFIL B : Niveau Intermédiaire";
+            resDiv.className = "profil-B";
+            sa = "SA : Course fractionnée (Fartlek) pour améliorer le soutien de l'effort.";
+        } else {
+            profil = "PROFIL C : Niveau Avancé";
+            resDiv.className = "profil-C";
+            sa = "SA : Entraînement par intervalles (30\"/30\") pour augmenter la VMA.";
+        }
+
+        document.getElementById('resProfil').innerText = profil;
+        document.getElementById('resVMA').innerText = "VMA Estimée : " + vma + " km/h";
+        document.getElementById('resSA').innerText = sa;
+        resDiv.style.display = "block";
+    }
+</script>
+</body>
+</html>
